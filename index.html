@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ShapeWars Test</title>
+  </head>
+  <!--<body style="overflow:hidden;">-->
+  <body>
+    <webview preload="server-preload.js" id="webview1" src="http://emh.lart.no/shapewars/" style="position:absolute;width:99%;height:50%;top:0;" nodeintegration></webview>
+    <webview preload="client-preload.js" id="webview2" src="http://emh.lart.no/shapewars/" style="position:absolute;width:99%;height:50%;top:50%;" nodeintegration></webview>
+    <script>
+      // need to have a script tag make webview work even if you don't plan to use it...
+      var webview1 = document.getElementById("webview1");
+      webview1.addEventListener('console-message', function(e) {
+        console.log('webview1:', e.message);
+      });
+      webview1.addEventListener('ipc-message', function(e) {
+          if (e.channel === 'peerId') {
+            var id = e.args[0];
+            console.log("peerId", id);
+            webview2.send("peerId", id);
+          }
+      });
+      var webview2 = document.getElementById("webview2");
+      webview2.addEventListener('console-message', function(e) {
+        console.log('webview2:', e.message);
+      });
+    </script>
+  </body>
+</html>
