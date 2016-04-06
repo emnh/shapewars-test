@@ -1,6 +1,5 @@
 var app = require('app');
 var BrowserWindow = require('browser-window');
-// var ipcMain = require('electron').ipcMain;
 
 var mainWindow = null;
 app.on('window-all-closed', function() {
